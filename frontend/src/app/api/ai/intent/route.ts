@@ -52,7 +52,7 @@ Table CommunicationLog: id (String), campaignId (String), customerId (String), c
 CRITICAL JOIN RULES:
 If the user asks to target based on past engagement (like "opened but did not click"), you MUST join CommunicationLog and filter by the most recent campaign.
 Example Query for "opened but did not click":
-SELECT DISTINCT Customer.id FROM Customer JOIN CommunicationLog ON Customer.id = CommunicationLog.customerId WHERE CommunicationLog.campaignId = (SELECT id FROM Campaign ORDER BY createdAt DESC LIMIT 1) AND CommunicationLog.status = 'OPENED')
+SELECT DISTINCT Customer.id FROM Customer JOIN CommunicationLog ON Customer.id = CommunicationLog.customerId WHERE CommunicationLog.campaignId = (SELECT id FROM Campaign ORDER BY createdAt DESC LIMIT 1) AND CommunicationLog.status = 'OPENED'
 
 Constraints:
 1. ONLY return the 'id' column from the Customer table. 

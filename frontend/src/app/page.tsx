@@ -58,7 +58,13 @@ export default function ChatCRM() {
         body: JSON.stringify({ intent: userMessage.content })
       });
       
-      const data = await res.json();
+      let data;
+      const textResponse = await res.text();
+      try {
+        data = JSON.parse(textResponse);
+      } catch (e) {
+        throw new Error(`Server Error (${res.status}): The server returned an invalid response. Please try again. \n\nDetails: ${textResponse.slice(0, 100)}...`);
+      }
       
       if (res.ok) {
         const agentMessage: Message = {
